@@ -14,6 +14,9 @@ null_ls.setup({
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
 		formatting.stylua,
-    -- diagnostics.flake8
+    diagnostics.pylint.with({ extra_args = { "--disable=C0114,C0115,C0116" } }),
 	},
 })
+
+vim.api.nvim_command [[autocmd BufWritePre *.py lua vim.lsp.buf.format({ async = true })]]
+
