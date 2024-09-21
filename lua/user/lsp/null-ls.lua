@@ -11,10 +11,10 @@ local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup({
 	debug = false,
 	sources = {
-		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+		-- formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
-		formatting.stylua,
-    diagnostics.pylint.with({ extra_args = { "--disable=C0114,C0115,C0116" } }),
+		-- formatting.stylua,
+    -- diagnostics.pylint.with({ extra_args = { "--disable=C0114,C0115,C0116" } }),
 	},
 })
 
