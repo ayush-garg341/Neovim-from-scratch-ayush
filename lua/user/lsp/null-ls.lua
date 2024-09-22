@@ -15,6 +15,7 @@ null_ls.setup({
 		formatting.black.with({ extra_args = { "--fast" } }),
 		-- formatting.stylua,
     -- diagnostics.pylint.with({ extra_args = { "--disable=C0114,C0115,C0116" } }),
+    diagnostics.flake8.with({ extra_args = { "--config=/Users/elliott/.flake8" } })
 	},
 })
 

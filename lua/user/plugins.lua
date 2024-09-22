@@ -97,6 +97,9 @@ return packer.startup(function(use)
   -- function signature
   use { "ray-x/lsp_signature.nvim" }
 
+  -- Orgmode for note taking
+  use {'nvim-orgmode/orgmode', config = function() require('orgmode').setup{} end}
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
