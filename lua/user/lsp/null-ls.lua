@@ -13,18 +13,19 @@ null_ls.setup({
 	sources = {
 		formatting.black.with({ extra_args = { "--fast" } }),
     formatting.astyle,
-    diagnostics.clang_check,
     diagnostics.flake8.with({ extra_args = { "--config=/Users/elliott/.flake8" } })
 	},
 })
 
 vim.api.nvim_command [[autocmd BufWritePre *.py lua vim.lsp.buf.format({ async = true })]]
 
+
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.c,*.cpp",  -- Adjust patterns for your file types
+    pattern = {"*.c", "*.cpp"},  -- Use a table for multiple patterns
     callback = function()
-        vim.cmd("silent! !astyle %")  -- Change path to your Astyle options file
-        vim.cmd("edit!")  -- Reload the file to see changes
+        local filename = vim.fn.expand('%')  -- Get the full path of the current file
+        vim.cmd("silent! write")
+        vim.cmd("!astyle -n " .. filename)  -- Ensure to use correct Astyle options
+        vim.cmd("edit")
     end,
 })
-
