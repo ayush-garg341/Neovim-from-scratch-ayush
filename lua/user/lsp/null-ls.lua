@@ -13,6 +13,7 @@ null_ls.setup({
 	sources = {
 		formatting.black.with({ extra_args = { "--fast" } }),
     formatting.astyle,
+    diagnostics.clang_check,
     diagnostics.flake8.with({ extra_args = { "--config=/Users/elliott/.flake8" } })
 	},
 })
