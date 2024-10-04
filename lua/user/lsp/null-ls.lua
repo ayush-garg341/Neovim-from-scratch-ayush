@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()
         local filename = vim.fn.expand('%')  -- Get the full path of the current file
         vim.cmd("silent! write")
-        vim.cmd("!astyle -n " .. filename)  -- Ensure to use correct Astyle options
-        vim.cmd("edit")
+        vim.cmd("!astyle -n " .. filename .. " > /dev/null 2>&1")  -- Ensure to use correct Astyle options
+        vim.cmd("silent! edit")
     end,
 })
