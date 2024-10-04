@@ -11,13 +11,20 @@ local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup({
 	debug = false,
 	sources = {
-		-- formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
-		-- formatting.stylua,
-    -- diagnostics.pylint.with({ extra_args = { "--disable=C0114,C0115,C0116" } }),
+    formatting.astyle,
+    diagnostics.clang_check,
     diagnostics.flake8.with({ extra_args = { "--config=/Users/elliott/.flake8" } })
 	},
 })
 
 vim.api.nvim_command [[autocmd BufWritePre *.py lua vim.lsp.buf.format({ async = true })]]
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.c,*.cpp",  -- Adjust patterns for your file types
+    callback = function()
+        vim.cmd("silent! !astyle %")  -- Change path to your Astyle options file
+        vim.cmd("edit!")  -- Reload the file to see changes
+    end,
+})
 
