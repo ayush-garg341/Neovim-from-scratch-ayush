@@ -71,4 +71,5 @@ keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 
 -- Show current filename if its too big to be visible as buffer name --
 keymap('n', '<leader>n', ':lua print(vim.fn.expand("%:t"))<CR>', { noremap = true, silent = true })
+keymap('n', '<leader>N', ':lua print(vim.fn.expand("%:p"))<CR>', { noremap = true, silent = true })
 
