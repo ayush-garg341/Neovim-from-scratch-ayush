@@ -69,3 +69,6 @@ keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 -- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 -- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+-- Show current filename if its too big to be visible as buffer name --
+keymap('n', '<leader>n', ':lua print(vim.fn.expand("%:t"))<CR>', { noremap = true, silent = true })
+
