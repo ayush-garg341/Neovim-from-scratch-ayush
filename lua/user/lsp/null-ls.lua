@@ -18,6 +18,7 @@ null_ls.setup({
 })
 
 vim.api.nvim_command [[autocmd BufWritePre *.py lua vim.lsp.buf.format({ async = true })]]
+vim.api.nvim_command [[autocmd BufWritePre *.go lua vim.lsp.buf.format({ async = true })]]
 
 
 vim.api.nvim_create_autocmd("BufWritePre", {
