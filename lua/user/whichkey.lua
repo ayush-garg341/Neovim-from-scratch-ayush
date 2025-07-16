@@ -3,6 +3,45 @@ if not status_ok then
   return
 end
 
+local function LiveGrepAdvanced()
+  local search = vim.fn.input("Search for: ")
+  if search == "" then
+    print("Cancelled")
+    return
+  end
+
+  local exclude = vim.fn.input("Exclude pattern (e.g., node_modules/ or *.min.js): ")
+  local case_sensitive = vim.fn.input("Case sensitive? (y/N): ")
+  local exact_match = vim.fn.input("Exact match (whole word)? (y/N): ")
+
+  local args = {}
+
+  if exclude ~= "" then
+    table.insert(args, "--glob")
+    table.insert(args, "!" .. exclude)
+  end
+
+  if case_sensitive:lower() == "y" then
+    table.insert(args, "--case-sensitive")
+  else
+    table.insert(args, "--smart-case")
+  end
+
+  if exact_match:lower() == "y" then
+    search = [[\b]] .. search .. [[\b]]
+    table.insert(args, "--pcre2")
+  end
+
+  require('telescope.builtin').live_grep({
+    default_text = search,
+    theme = "ivy", 
+    additional_args = function()
+      return args
+    end
+  })
+end
+
+
 local setup = {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -93,7 +132,7 @@ local mappings = {
     "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Find files",
   },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
+  ["F"] = { LiveGrepAdvanced, "Advanced Find Text" },
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
 
   p = {
