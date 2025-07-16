@@ -1,44 +1,56 @@
 local status_ok, which_key = pcall(require, "which-key")
+local themes = require("telescope.themes")
 if not status_ok then
   return
 end
 
 local function LiveGrepAdvanced()
-  local search = vim.fn.input("Search for: ")
-  if search == "" then
+  local input = vim.fn.input("Search term (!exclude1 !exclude2 --case --exact): ")
+
+  if input == "" then
     print("Cancelled")
     return
   end
 
-  local exclude = vim.fn.input("Exclude pattern (e.g., node_modules/ or *.min.js): ")
-  local case_sensitive = vim.fn.input("Case sensitive? (y/N): ")
-  local exact_match = vim.fn.input("Exact match (whole word)? (y/N): ")
-
   local args = {}
+  local search = ""
+  local case_sensitive = false
+  local exact_match = false
 
-  if exclude ~= "" then
-    table.insert(args, "--glob")
-    table.insert(args, "!" .. exclude)
+  for word in string.gmatch(input, "%S+") do
+    if word == "--case" then
+      case_sensitive = true
+    elseif word == "--exact" then
+      exact_match = true
+    elseif vim.startswith(word, "!") then
+      local pattern = word:sub(2)
+      table.insert(args, "--glob")
+      table.insert(args, "!" .. pattern)
+    elseif search == "" then
+      search = word
+    else
+      -- If user provides extra search words, append them (optional)
+      search = search .. " " .. word
+    end
   end
 
-  if case_sensitive:lower() == "y" then
+  if case_sensitive then
     table.insert(args, "--case-sensitive")
   else
     table.insert(args, "--smart-case")
   end
 
-  if exact_match:lower() == "y" then
+  if exact_match then
     search = [[\b]] .. search .. [[\b]]
     table.insert(args, "--pcre2")
   end
 
-  require('telescope.builtin').live_grep({
+  require('telescope.builtin').live_grep(themes.get_ivy({
     default_text = search,
-    theme = "ivy", 
     additional_args = function()
       return args
     end
-  })
+  }))
 end
 
 
