@@ -97,8 +97,6 @@ return packer.startup(function(use)
   -- function signature
   use { "ray-x/lsp_signature.nvim" }
 
-  -- Orgmode for note taking
-  use {'nvim-orgmode/orgmode', config = function() require('orgmode').setup{} end}
 
   -- Markdown renderer
   use({
@@ -109,6 +107,13 @@ return packer.startup(function(use)
       requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
       config = function()
           require('render-markdown').setup({})
+      end,
+  })
+
+  use({
+      "ayush-garg341/code_sync",
+      config = function()
+        require("code_sync").setup()
       end,
   })
 
