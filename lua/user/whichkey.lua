@@ -53,6 +53,15 @@ local function LiveGrepAdvanced()
   }))
 end
 
+local function FileGrepAdvanced()
+  require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{
+    previewer = true, 
+    hidden = true, 
+    prompt_title = "Find Files 🔍"
+  })
+end
+
+
 
 local setup = {
   plugins = {
@@ -141,7 +150,7 @@ local mappings = {
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+    FileGrepAdvanced,
     "Find files",
   },
   ["F"] = { LiveGrepAdvanced, "Advanced Find Text" },
