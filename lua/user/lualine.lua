@@ -62,6 +62,10 @@ local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
+local formatted_date = function()
+  return os.date("%a %d %B %Y %H:%M")
+end
+
 lualine.setup({
 	options = {
 		icons_enabled = true,
@@ -74,7 +78,7 @@ lualine.setup({
 	sections = {
 		lualine_a = { branch, diagnostics },
 		lualine_b = { mode },
-		lualine_c = {},
+		lualine_c = {'filename', formatted_date},
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
 		lualine_x = { diff, spaces, "encoding", filetype },
 		lualine_y = { location },
